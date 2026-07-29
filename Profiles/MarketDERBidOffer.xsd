@@ -1,0 +1,611 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:m="http://www.ucaiug.org/profile#"
+           xmlns:sawsdl="http://www.w3.org/ns/sawsdl"
+           xmlns:xs="http://www.w3.org/2001/XMLSchema"
+           targetNamespace="http://www.ucaiug.org/profile#"
+           elementFormDefault="qualified"
+           attributeFormDefault="unqualified">
+   <xs:annotation>
+      <xs:documentation xml:lang="en">
+	Copyright 2026 UCAIug
+
+	Licensed under the Apache License, Version 2.0 (the "License");
+	you may not use this file except in compliance with the License.
+	You may obtain a copy of the License at
+
+	https://www.apache.org/licenses/LICENSE-2.0
+
+	Unless required by applicable law or agreed to in writing, software
+	distributed under the License is distributed on an "AS IS" BASIS,
+	WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+	
+	See the License for the specific language governing permissions and
+	limitations under the License.
+</xs:documentation>
+   </xs:annotation>
+   <xs:annotation/>
+   <xs:element name="Profile" type="m:Profile"/>
+   <xs:complexType name="Profile">
+      <xs:sequence>
+         <xs:element name="ResourceBid"
+                     type="m:ResourceBid"
+                     minOccurs="1"
+                     maxOccurs="unbounded"/>
+      </xs:sequence>
+   </xs:complexType>
+   <xs:complexType name="BasicIntervalSchedule"
+                   sawsdl:modelReference="http://iec.ch/TC57/CIM100#BasicIntervalSchedule">
+      <xs:annotation>
+         <xs:documentation>Schedule of values at points in time.</xs:documentation>
+      </xs:annotation>
+      <xs:complexContent>
+         <xs:extension base="m:IdentifiedObject">
+            <xs:sequence>
+               <xs:element name="startTime"
+                           minOccurs="0"
+                           maxOccurs="1"
+                           type="xs:dateTime"
+                           sawsdl:modelReference="http://iec.ch/TC57/CIM100#BasicIntervalSchedule.startTime">
+                  <xs:annotation>
+                     <xs:documentation>The time for the first time point.  The value can be a time of day, not a specific date.</xs:documentation>
+                  </xs:annotation>
+               </xs:element>
+               <xs:element name="value1Multiplier"
+                           minOccurs="0"
+                           maxOccurs="1"
+                           type="m:UnitMultiplier"
+                           sawsdl:modelReference="http://iec.ch/TC57/CIM100#BasicIntervalSchedule.value1Multiplier">
+                  <xs:annotation>
+                     <xs:documentation>Multiplier for value1.</xs:documentation>
+                  </xs:annotation>
+               </xs:element>
+               <xs:element name="value1Unit"
+                           minOccurs="0"
+                           maxOccurs="1"
+                           type="m:UnitSymbol"
+                           sawsdl:modelReference="http://iec.ch/TC57/CIM100#BasicIntervalSchedule.value1Unit">
+                  <xs:annotation>
+                     <xs:documentation>Value1 units of measure.</xs:documentation>
+                  </xs:annotation>
+               </xs:element>
+            </xs:sequence>
+         </xs:extension>
+      </xs:complexContent>
+   </xs:complexType>
+   <xs:complexType name="Bid" sawsdl:modelReference="http://iec.ch/TC57/CIM100#Bid">
+      <xs:annotation>
+         <xs:documentation>Represents both bids to purchase and offers to sell energy or ancillary services in an RTO-sponsored market.</xs:documentation>
+      </xs:annotation>
+      <xs:complexContent>
+         <xs:extension base="m:Document">
+            <xs:sequence>
+               <xs:element name="ProductBids"
+                           minOccurs="0"
+                           maxOccurs="unbounded"
+                           type="m:ProductBid"
+                           sawsdl:modelReference="http://iec.ch/TC57/CIM100#Bid.ProductBids">
+                  <xs:annotation>
+                     <xs:documentation>A bid comprises one or more product bids of market products</xs:documentation>
+                  </xs:annotation>
+               </xs:element>
+            </xs:sequence>
+         </xs:extension>
+      </xs:complexContent>
+   </xs:complexType>
+   <xs:complexType name="BidPriceCurve"
+                   sawsdl:modelReference="http://iec.ch/TC57/CIM100#BidPriceCurve">
+      <xs:annotation>
+         <xs:documentation>Relationship between unit operating price in $/hour (Y-axis) and unit output in MW (X-axis).</xs:documentation>
+      </xs:annotation>
+      <xs:complexContent>
+         <xs:extension base="m:Curve">
+            <xs:sequence>
+               <xs:element name="BidSchedule"
+                           minOccurs="0"
+                           maxOccurs="unbounded"
+                           type="m:BidPriceSchedule"
+                           sawsdl:modelReference="http://iec.ch/TC57/CIM100#BidPriceCurve.BidSchedule">
+                  <xs:annotation/>
+               </xs:element>
+            </xs:sequence>
+         </xs:extension>
+      </xs:complexContent>
+   </xs:complexType>
+   <xs:complexType name="BidPriceSchedule"
+                   sawsdl:modelReference="http://iec.ch/TC57/CIM100#BidPriceSchedule">
+      <xs:annotation>
+         <xs:documentation>Defines bid schedules to allow a product bid to use specified bid price curves for different time intervals.</xs:documentation>
+      </xs:annotation>
+      <xs:complexContent>
+         <xs:extension base="m:RegularIntervalSchedule">
+            <xs:sequence>
+               <xs:element name="ProductBid"
+                           minOccurs="0"
+                           maxOccurs="1"
+                           type="m:ProductBid"
+                           sawsdl:modelReference="http://iec.ch/TC57/CIM100#BidPriceSchedule.ProductBid">
+                  <xs:annotation/>
+               </xs:element>
+            </xs:sequence>
+         </xs:extension>
+      </xs:complexContent>
+   </xs:complexType>
+   <xs:complexType name="BidSelfSched"
+                   sawsdl:modelReference="http://iec.ch/TC57/CIM100#BidSelfSched">
+      <xs:annotation>
+         <xs:documentation>Defines self schedule values to be used for specified time intervals.</xs:documentation>
+      </xs:annotation>
+      <xs:complexContent>
+         <xs:extension base="m:RegularIntervalSchedule">
+            <xs:sequence>
+               <xs:element name="ProductBid"
+                           minOccurs="0"
+                           maxOccurs="1"
+                           type="m:ProductBid"
+                           sawsdl:modelReference="http://iec.ch/TC57/CIM100#BidSelfSched.ProductBid">
+                  <xs:annotation/>
+               </xs:element>
+            </xs:sequence>
+         </xs:extension>
+      </xs:complexContent>
+   </xs:complexType>
+   <xs:complexType name="Curve" sawsdl:modelReference="http://iec.ch/TC57/CIM100#Curve">
+      <xs:annotation>
+         <xs:documentation>A multi-purpose curve or functional relationship between an independent variable (X-axis) and dependent (Y-axis) variables.</xs:documentation>
+      </xs:annotation>
+      <xs:complexContent>
+         <xs:extension base="m:IdentifiedObject">
+            <xs:sequence>
+               <xs:element name="xMultiplier"
+                           minOccurs="0"
+                           maxOccurs="1"
+                           type="m:UnitMultiplier"
+                           sawsdl:modelReference="http://iec.ch/TC57/CIM100#Curve.xMultiplier">
+                  <xs:annotation>
+                     <xs:documentation>Multiplier for X-axis.</xs:documentation>
+                  </xs:annotation>
+               </xs:element>
+               <xs:element name="xUnit"
+                           minOccurs="0"
+                           maxOccurs="1"
+                           type="m:UnitSymbol"
+                           sawsdl:modelReference="http://iec.ch/TC57/CIM100#Curve.xUnit">
+                  <xs:annotation>
+                     <xs:documentation>The X-axis units of measure.</xs:documentation>
+                  </xs:annotation>
+               </xs:element>
+            </xs:sequence>
+         </xs:extension>
+      </xs:complexContent>
+   </xs:complexType>
+   <xs:complexType name="CurveData"
+                   sawsdl:modelReference="http://iec.ch/TC57/CIM100#CurveData">
+      <xs:annotation>
+         <xs:documentation>Multi-purpose data points for defining a curve.  The use of this generic class is discouraged if a more specific class can be used to specify the X and Y axis values along with their specific data types.</xs:documentation>
+      </xs:annotation>
+      <xs:sequence>
+         <xs:element name="xvalue"
+                     minOccurs="0"
+                     maxOccurs="1"
+                     type="xs:float"
+                     sawsdl:modelReference="http://iec.ch/TC57/CIM100#CurveData.xvalue">
+            <xs:annotation>
+               <xs:documentation>The data value of the X-axis variable,  depending on the X-axis units.</xs:documentation>
+            </xs:annotation>
+         </xs:element>
+         <xs:element name="y1value"
+                     minOccurs="0"
+                     maxOccurs="1"
+                     type="xs:float"
+                     sawsdl:modelReference="http://iec.ch/TC57/CIM100#CurveData.y1value">
+            <xs:annotation>
+               <xs:documentation>The data value of the  first Y-axis variable, depending on the Y-axis units.</xs:documentation>
+            </xs:annotation>
+         </xs:element>
+         <xs:element name="Curve"
+                     minOccurs="0"
+                     maxOccurs="1"
+                     type="m:Curve"
+                     sawsdl:modelReference="http://iec.ch/TC57/CIM100#CurveData.Curve">
+            <xs:annotation>
+               <xs:documentation>The curve of  this curve data point.</xs:documentation>
+            </xs:annotation>
+         </xs:element>
+      </xs:sequence>
+   </xs:complexType>
+   <xs:complexType name="Document"
+                   sawsdl:modelReference="http://iec.ch/TC57/CIM100#Document">
+      <xs:annotation>
+         <xs:documentation>Parent class for different groupings of information collected and managed as a part of a business process. It will frequently contain references to other objects, such as assets, people and power system resources.</xs:documentation>
+      </xs:annotation>
+      <xs:complexContent>
+         <xs:extension base="m:IdentifiedObject">
+            <xs:sequence>
+               <xs:element name="comment"
+                           minOccurs="0"
+                           maxOccurs="1"
+                           type="xs:string"
+                           sawsdl:modelReference="http://iec.ch/TC57/CIM100#Document.comment">
+                  <xs:annotation>
+                     <xs:documentation>Free text comment.</xs:documentation>
+                  </xs:annotation>
+               </xs:element>
+               <xs:element name="createdDateTime"
+                           minOccurs="0"
+                           maxOccurs="1"
+                           type="xs:dateTime"
+                           sawsdl:modelReference="http://iec.ch/TC57/CIM100#Document.createdDateTime">
+                  <xs:annotation>
+                     <xs:documentation>Date and time that this document was created.</xs:documentation>
+                  </xs:annotation>
+               </xs:element>
+               <xs:element name="lastModifiedDateTime"
+                           minOccurs="0"
+                           maxOccurs="1"
+                           type="xs:dateTime"
+                           sawsdl:modelReference="http://iec.ch/TC57/CIM100#Document.lastModifiedDateTime">
+                  <xs:annotation>
+                     <xs:documentation>Date and time this document was last modified. Documents may potentially be modified many times during their lifetime.</xs:documentation>
+                  </xs:annotation>
+               </xs:element>
+            </xs:sequence>
+         </xs:extension>
+      </xs:complexContent>
+   </xs:complexType>
+   <xs:complexType name="GeneratingBid"
+                   sawsdl:modelReference="http://iec.ch/TC57/CIM100#GeneratingBid">
+      <xs:annotation>
+         <xs:documentation>Offer to supply energy/ancillary services from a generating unit or resource.</xs:documentation>
+      </xs:annotation>
+      <xs:complexContent>
+         <xs:extension base="m:ResourceBid">
+            <xs:sequence>
+               <xs:element name="RegisteredGenerator"
+                           minOccurs="0"
+                           maxOccurs="1"
+                           type="m:RegisteredGenerator"
+                           sawsdl:modelReference="http://iec.ch/TC57/CIM100#GeneratingBid.RegisteredGenerator">
+                  <xs:annotation/>
+               </xs:element>
+            </xs:sequence>
+         </xs:extension>
+      </xs:complexContent>
+   </xs:complexType>
+   <xs:complexType name="IdentifiedObject"
+                   sawsdl:modelReference="http://iec.ch/TC57/CIM100#IdentifiedObject">
+      <xs:annotation>
+         <xs:documentation>This is a root class to provide common identification for all classes needing identification and naming attributes.</xs:documentation>
+      </xs:annotation>
+      <xs:sequence>
+         <xs:element name="mRID"
+                     minOccurs="0"
+                     maxOccurs="1"
+                     type="xs:string"
+                     sawsdl:modelReference="http://iec.ch/TC57/CIM100#IdentifiedObject.mRID">
+            <xs:annotation>
+               <xs:documentation>Master resource identifier issued by a model authority. The mRID is unique within an exchange context. Global uniqueness is easily achieved by using a UUID, as specified in RFC 4122, for the mRID. The use of UUID is strongly recommended.</xs:documentation>
+               <xs:documentation>For CIMXML data files in RDF syntax conforming to IEC 61970-552, the mRID is mapped to rdf:ID or rdf:about attributes that identify CIM object elements.</xs:documentation>
+            </xs:annotation>
+         </xs:element>
+      </xs:sequence>
+   </xs:complexType>
+   <xs:complexType name="LoadBid"
+                   sawsdl:modelReference="http://iec.ch/TC57/CIM100#LoadBid">
+      <xs:annotation>
+         <xs:documentation>Offer to supply energy/ancillary services from a load resource (participating load reduces consumption).</xs:documentation>
+      </xs:annotation>
+      <xs:complexContent>
+         <xs:extension base="m:ResourceBid">
+            <xs:sequence>
+               <xs:element name="RegisteredLoad"
+                           minOccurs="0"
+                           maxOccurs="1"
+                           type="m:RegisteredLoad"
+                           sawsdl:modelReference="http://iec.ch/TC57/CIM100#LoadBid.RegisteredLoad">
+                  <xs:annotation/>
+               </xs:element>
+            </xs:sequence>
+         </xs:extension>
+      </xs:complexContent>
+   </xs:complexType>
+   <xs:complexType name="MarketProduct"
+                   sawsdl:modelReference="http://iec.ch/TC57/CIM100#MarketProduct">
+      <xs:annotation>
+         <xs:documentation>A product traded by an RTO (e.g. energy, 10 minute spinning reserve).  Ancillary service product examples include: Regulation, Regulation Up, Regulation Down, Spinning Reserve, Non-Spinning Reserve, etc.</xs:documentation>
+      </xs:annotation>
+      <xs:complexContent>
+         <xs:extension base="m:IdentifiedObject">
+            <xs:sequence>
+               <xs:element name="marketProductType"
+                           minOccurs="0"
+                           maxOccurs="1"
+                           type="m:MarketProductType"
+                           sawsdl:modelReference="http://iec.ch/TC57/CIM100#MarketProduct.marketProductType">
+                  <xs:annotation>
+                     <xs:documentation>Market product type examples:</xs:documentation>
+                     <xs:documentation>EN (Energy)</xs:documentation>
+                     <xs:documentation>RU (Regulation Up)</xs:documentation>
+                     <xs:documentation>RD (Regulation Dn)</xs:documentation>
+                     <xs:documentation>SR (Spinning Reserve)</xs:documentation>
+                     <xs:documentation>NR (Non-Spinning Reserve)</xs:documentation>
+                     <xs:documentation>RC (RUC)</xs:documentation>
+                  </xs:annotation>
+               </xs:element>
+               <xs:element name="ProductBids"
+                           minOccurs="0"
+                           maxOccurs="unbounded"
+                           type="m:ProductBid"
+                           sawsdl:modelReference="http://iec.ch/TC57/CIM100#MarketProduct.ProductBids">
+                  <xs:annotation/>
+               </xs:element>
+            </xs:sequence>
+         </xs:extension>
+      </xs:complexContent>
+   </xs:complexType>
+   <xs:simpleType name="MarketProductType"
+                  sawsdl:modelReference="http://iec.ch/TC57/CIM100#MarketProductType">
+      <xs:annotation>
+         <xs:documentation>For example:</xs:documentation>
+         <xs:documentation>Energy, Reg Up, Reg Down, Spin Reserve, Nonspin Reserve, RUC, Load Folloing Up, and Load Following Down.</xs:documentation>
+      </xs:annotation>
+      <xs:restriction base="xs:string">
+         <xs:enumeration value="EN">
+            <xs:annotation>
+               <xs:documentation>energy type</xs:documentation>
+            </xs:annotation>
+         </xs:enumeration>
+         <xs:enumeration value="LFD">
+            <xs:annotation>
+               <xs:documentation>Load following down</xs:documentation>
+            </xs:annotation>
+         </xs:enumeration>
+         <xs:enumeration value="LFU">
+            <xs:annotation>
+               <xs:documentation>Load following up</xs:documentation>
+            </xs:annotation>
+         </xs:enumeration>
+         <xs:enumeration value="NR">
+            <xs:annotation>
+               <xs:documentation>non spinning reserve</xs:documentation>
+            </xs:annotation>
+         </xs:enumeration>
+         <xs:enumeration value="RC">
+            <xs:annotation>
+               <xs:documentation>Residual Unit Commitment</xs:documentation>
+            </xs:annotation>
+         </xs:enumeration>
+         <xs:enumeration value="RD">
+            <xs:annotation>
+               <xs:documentation>regulation down</xs:documentation>
+            </xs:annotation>
+         </xs:enumeration>
+         <xs:enumeration value="REG">
+            <xs:annotation>
+               <xs:documentation>Regulation</xs:documentation>
+            </xs:annotation>
+         </xs:enumeration>
+         <xs:enumeration value="RU">
+            <xs:annotation>
+               <xs:documentation>regulation up</xs:documentation>
+            </xs:annotation>
+         </xs:enumeration>
+         <xs:enumeration value="SR">
+            <xs:annotation>
+               <xs:documentation>spinning reserve</xs:documentation>
+            </xs:annotation>
+         </xs:enumeration>
+      </xs:restriction>
+   </xs:simpleType>
+   <xs:complexType name="ProductBid"
+                   sawsdl:modelReference="http://iec.ch/TC57/CIM100#ProductBid">
+      <xs:annotation>
+         <xs:documentation>Component of a bid that pertains to one market product.</xs:documentation>
+      </xs:annotation>
+      <xs:complexContent>
+         <xs:extension base="m:IdentifiedObject">
+            <xs:sequence/>
+         </xs:extension>
+      </xs:complexContent>
+   </xs:complexType>
+   <xs:complexType name="RegisteredGenerator"
+                   sawsdl:modelReference="http://iec.ch/TC57/CIM100#RegisteredGenerator">
+      <xs:annotation>
+         <xs:documentation>Model of a generator  that is registered to participate in the market.</xs:documentation>
+      </xs:annotation>
+      <xs:complexContent>
+         <xs:extension base="m:RegisteredResource">
+            <xs:sequence/>
+         </xs:extension>
+      </xs:complexContent>
+   </xs:complexType>
+   <xs:complexType name="RegisteredLoad"
+                   sawsdl:modelReference="http://iec.ch/TC57/CIM100#RegisteredLoad">
+      <xs:annotation>
+         <xs:documentation>Model of a load that is registered to participate in the market.</xs:documentation>
+         <xs:documentation>RegisteredLoad is used to model any load that is served by the wholesale market directly. RegisteredLoads may be dispatchable or non-dispatchable and may or may not have bid curves. Examples of RegisteredLoads would include: distribution company load, energy retailer load, large bulk power system connected facility load.</xs:documentation>
+         <xs:documentation>Loads that are served indirectly, for example - through an energy retailer or a vertical utility, should be modeled as RegisteredDistributedResources. Examples of RegisteredDistributedResources would include: distribution level storage, distribution level generation and distribution level demand response.</xs:documentation>
+      </xs:annotation>
+      <xs:complexContent>
+         <xs:extension base="m:RegisteredResource">
+            <xs:sequence/>
+         </xs:extension>
+      </xs:complexContent>
+   </xs:complexType>
+   <xs:complexType name="RegisteredResource"
+                   sawsdl:modelReference="http://iec.ch/TC57/CIM100#RegisteredResource">
+      <xs:annotation>
+         <xs:documentation>A resource that is registered through the market participant registration system. Examples include generating unit, load, and non-physical generator or load.</xs:documentation>
+      </xs:annotation>
+      <xs:sequence/>
+   </xs:complexType>
+   <xs:complexType name="RegularIntervalSchedule"
+                   sawsdl:modelReference="http://iec.ch/TC57/CIM100#RegularIntervalSchedule">
+      <xs:annotation>
+         <xs:documentation>The schedule has time points where the time between them is constant.</xs:documentation>
+      </xs:annotation>
+      <xs:complexContent>
+         <xs:extension base="m:BasicIntervalSchedule">
+            <xs:sequence>
+               <xs:element name="endTime"
+                           minOccurs="0"
+                           maxOccurs="1"
+                           type="xs:dateTime"
+                           sawsdl:modelReference="http://iec.ch/TC57/CIM100#RegularIntervalSchedule.endTime">
+                  <xs:annotation>
+                     <xs:documentation>The time for the last time point.  The value can be a time of day, not a specific date.</xs:documentation>
+                  </xs:annotation>
+               </xs:element>
+               <xs:element name="timeStep"
+                           minOccurs="0"
+                           maxOccurs="1"
+                           type="m:Seconds"
+                           sawsdl:modelReference="http://iec.ch/TC57/CIM100#RegularIntervalSchedule.timeStep">
+                  <xs:annotation>
+                     <xs:documentation>The time between each pair of subsequent regular time points in sequence order.</xs:documentation>
+                  </xs:annotation>
+               </xs:element>
+            </xs:sequence>
+         </xs:extension>
+      </xs:complexContent>
+   </xs:complexType>
+   <xs:complexType name="RegularTimePoint"
+                   sawsdl:modelReference="http://iec.ch/TC57/CIM100#RegularTimePoint">
+      <xs:annotation>
+         <xs:documentation>Time point for a schedule where the time between the consecutive points is constant.</xs:documentation>
+      </xs:annotation>
+      <xs:sequence>
+         <xs:element name="sequenceNumber"
+                     minOccurs="0"
+                     maxOccurs="1"
+                     type="xs:integer"
+                     sawsdl:modelReference="http://iec.ch/TC57/CIM100#RegularTimePoint.sequenceNumber">
+            <xs:annotation>
+               <xs:documentation>The position of the regular time point in the sequence. Note that time points don't have to be sequential, i.e. time points may be omitted. The actual time for a RegularTimePoint is computed by multiplying the associated regular interval schedule's time step with the regular time point sequence number and adding the associated schedules start time. To specify values for the start time, use sequence number 0.  The sequence number cannot be negative.</xs:documentation>
+            </xs:annotation>
+         </xs:element>
+         <xs:element name="value1"
+                     minOccurs="0"
+                     maxOccurs="1"
+                     type="xs:float"
+                     sawsdl:modelReference="http://iec.ch/TC57/CIM100#RegularTimePoint.value1">
+            <xs:annotation>
+               <xs:documentation>The first value at the time. The meaning of the value is defined by the derived type of the associated schedule.</xs:documentation>
+            </xs:annotation>
+         </xs:element>
+         <xs:element name="value2"
+                     minOccurs="0"
+                     maxOccurs="1"
+                     type="xs:float"
+                     sawsdl:modelReference="http://iec.ch/TC57/CIM100#RegularTimePoint.value2">
+            <xs:annotation>
+               <xs:documentation>The second value at the time. The meaning of the value is defined by the derived type of the associated schedule.</xs:documentation>
+            </xs:annotation>
+         </xs:element>
+         <xs:element name="IntervalSchedule"
+                     minOccurs="0"
+                     maxOccurs="1"
+                     type="m:RegularIntervalSchedule"
+                     sawsdl:modelReference="http://iec.ch/TC57/CIM100#RegularTimePoint.IntervalSchedule">
+            <xs:annotation>
+               <xs:documentation>Regular interval schedule containing this time point.</xs:documentation>
+            </xs:annotation>
+         </xs:element>
+      </xs:sequence>
+   </xs:complexType>
+   <xs:complexType name="ResourceBid"
+                   sawsdl:modelReference="http://iec.ch/TC57/CIM100#ResourceBid">
+      <xs:annotation>
+         <xs:documentation>Energy bid for generation, load, or virtual type for the whole of the market-trading period (i.e., one day in day ahead market or one hour in the real time market).</xs:documentation>
+      </xs:annotation>
+      <xs:complexContent>
+         <xs:extension base="m:Bid">
+            <xs:sequence>
+               <xs:element name="commodityType"
+                           minOccurs="0"
+                           maxOccurs="1"
+                           type="xs:string"
+                           sawsdl:modelReference="http://iec.ch/TC57/CIM100#ResourceBid.commodityType">
+                  <xs:annotation>
+                     <xs:documentation>Energy product (commodity) type:</xs:documentation>
+                     <xs:documentation>'En' - Energy</xs:documentation>
+                     <xs:documentation>'Ru' - Regulation Up</xs:documentation>
+                     <xs:documentation>'Rd' - Regulation Dn</xs:documentation>
+                     <xs:documentation>'Sr' - Spinning Reserve</xs:documentation>
+                     <xs:documentation>'Nr' - Non-Spinning Reserve</xs:documentation>
+                     <xs:documentation>'Or' - Operating Reserve</xs:documentation>
+                  </xs:annotation>
+               </xs:element>
+            </xs:sequence>
+         </xs:extension>
+      </xs:complexContent>
+   </xs:complexType>
+   <xs:simpleType name="UnitMultiplier"
+                  sawsdl:modelReference="http://iec.ch/TC57/CIM100#UnitMultiplier">
+      <xs:annotation>
+         <xs:documentation>The unit multipliers defined for the CIM.  When applied to unit symbols, the unit symbol is treated as a derived unit. Regardless of the contents of the unit symbol text, the unit symbol shall be treated as if it were a single-character unit symbol. Unit symbols should not contain multipliers, and it should be left to the multiplier to define the multiple for an entire data type.</xs:documentation>
+         <xs:documentation>For example, if a unit symbol is "m2Pers" and the multiplier is "k", then the value is k(m**2/s), and the multiplier applies to the entire final value, not to any individual part of the value. This can be conceptualized by substituting a derived unit symbol for the unit type. If one imagines that the symbol "�" represents the derived unit "m2Pers", then applying the multiplier "k" can be conceptualized simply as "k�".</xs:documentation>
+         <xs:documentation>For example, the SI unit for mass is "kg" and not "g".  If the unit symbol is defined as "kg", then the multiplier is applied to "kg" as a whole and does not replace the "k" in front of the "g". In this case, the multiplier of "m" would be used with the unit symbol of "kg" to represent one gram.  As a text string, this violates the instructions in IEC 80000-1. However, because the unit symbol in CIM is treated as a derived unit instead of as an SI unit, it makes more sense to conceptualize the "kg" as if it were replaced by one of the proposed replacements for the SI mass symbol. If one imagines that the "kg" were replaced by a symbol "�", then it is easier to conceptualize the multiplier "m" as creating the proper unit "m�", and not the forbidden unit "mkg".</xs:documentation>
+      </xs:annotation>
+      <xs:restriction base="xs:string">
+         <xs:enumeration value="M">
+            <xs:annotation>
+               <xs:documentation>Mega 10**6.</xs:documentation>
+            </xs:annotation>
+         </xs:enumeration>
+         <xs:enumeration value="k">
+            <xs:annotation>
+               <xs:documentation>Kilo 10**3.</xs:documentation>
+            </xs:annotation>
+         </xs:enumeration>
+         <xs:enumeration value="none">
+            <xs:annotation>
+               <xs:documentation>No multiplier or equivalently multiply by 1.</xs:documentation>
+            </xs:annotation>
+         </xs:enumeration>
+      </xs:restriction>
+   </xs:simpleType>
+   <xs:simpleType name="UnitSymbol"
+                  sawsdl:modelReference="http://iec.ch/TC57/CIM100#UnitSymbol">
+      <xs:annotation>
+         <xs:documentation>The derived units defined for usage in the CIM. In some cases, the derived unit is equal to an SI unit. Whenever possible, the standard derived symbol is used instead of the formula for the derived unit. For example, the unit symbol Farad is defined as "F" instead of "CPerV". In cases where a standard symbol does not exist for a derived unit, the formula for the unit is used as the unit symbol. For example, density does not have a standard symbol and so it is represented as "kgPerm3". With the exception of the "kg", which is an SI unit, the unit symbols do not contain multipliers and therefore represent the base derived unit to which a multiplier can be applied as a whole.</xs:documentation>
+         <xs:documentation>Every unit symbol is treated as an unparseable text as if it were a single-letter symbol. The meaning of each unit symbol is defined by the accompanying descriptive text and not by the text contents of the unit symbol.</xs:documentation>
+         <xs:documentation>To allow the widest possible range of serializations without requiring special character handling, several substitutions are made which deviate from the format described in IEC 80000-1. The division symbol "/" is replaced by the letters "Per". Exponents are written in plain text after the unit as "m3" instead of being formatted as "m" with a superscript of 3  or introducing a symbol as in "m^3". The degree symbol "�" is replaced with the letters "deg". Any clarification of the meaning for a substitution is included in the description for the unit symbol.</xs:documentation>
+         <xs:documentation>Non-SI units are included in list of unit symbols to allow sources of data to be correctly labelled with their non-SI units (for example, a GPS sensor that is reporting numbers that represent feet instead of meters). This allows software to use the unit symbol information correctly convert and scale the raw data of those sources into SI-based units.</xs:documentation>
+         <xs:documentation>The integer values are used for harmonization with IEC 61850.</xs:documentation>
+      </xs:annotation>
+      <xs:restriction base="xs:string">
+         <xs:enumeration value="W">
+            <xs:annotation>
+               <xs:documentation>Real power in watts (J/s). Electrical power may have real and reactive components. The real portion of electrical power (I&amp;#178;R or VIcos(phi)), is expressed in Watts. See also apparent power and reactive power.</xs:documentation>
+            </xs:annotation>
+         </xs:enumeration>
+         <xs:enumeration value="WPers">
+            <xs:annotation>
+               <xs:documentation>Ramp rate in watts per second.</xs:documentation>
+            </xs:annotation>
+         </xs:enumeration>
+         <xs:enumeration value="Wh">
+            <xs:annotation>
+               <xs:documentation>Real energy in watt hours.</xs:documentation>
+            </xs:annotation>
+         </xs:enumeration>
+         <xs:enumeration value="kg">
+            <xs:annotation>
+               <xs:documentation>Mass in kilograms.  Note: multiplier �k� is included in this unit symbol for compatibility with IEC 61850-7-3.</xs:documentation>
+            </xs:annotation>
+         </xs:enumeration>
+         <xs:enumeration value="min">
+            <xs:annotation>
+               <xs:documentation>Time in minutes, minute  = 60 s.</xs:documentation>
+            </xs:annotation>
+         </xs:enumeration>
+      </xs:restriction>
+   </xs:simpleType>
+   <xs:simpleType name="Seconds"
+                  sawsdl:modelReference="http://iec.ch/TC57/CIM100#Seconds">
+      <xs:annotation>
+         <xs:documentation>Time, in seconds.</xs:documentation>
+      </xs:annotation>
+      <xs:restriction base="xs:float"/>
+   </xs:simpleType>
+</xs:schema>
