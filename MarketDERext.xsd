@@ -1,0 +1,981 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:m="http://www.ucaiug.org/profile#"
+           xmlns:sawsdl="http://www.w3.org/ns/sawsdl"
+           xmlns:xs="http://www.w3.org/2001/XMLSchema"
+           targetNamespace="http://www.ucaiug.org/profile#"
+           elementFormDefault="qualified"
+           attributeFormDefault="unqualified">
+   <xs:annotation>
+      <xs:documentation xml:lang="en">
+	Copyright 2026 UCAIug
+
+	Licensed under the Apache License, Version 2.0 (the "License");
+	you may not use this file except in compliance with the License.
+	You may obtain a copy of the License at
+
+	https://www.apache.org/licenses/LICENSE-2.0
+
+	Unless required by applicable law or agreed to in writing, software
+	distributed under the License is distributed on an "AS IS" BASIS,
+	WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+	
+	See the License for the specific language governing permissions and
+	limitations under the License.
+</xs:documentation>
+   </xs:annotation>
+   <xs:annotation/>
+   <xs:element name="Profile" type="m:Profile"/>
+   <xs:complexType name="Profile">
+      <xs:sequence>
+         <xs:element name="RegisteredDistributedResource"
+                     type="m:RegisteredDistributedResource"
+                     minOccurs="1"
+                     maxOccurs="unbounded"/>
+      </xs:sequence>
+   </xs:complexType>
+
+   <xs:complexType name="AggregateNode"
+                   sawsdl:modelReference="http://iec.ch/TC57/CIM100#AggregateNode">
+      <xs:annotation>
+         <xs:documentation>An aggregated node can define a typed grouping further defined by the AnodeType enumeratuion. Types range from System Zone/Regions to Market Energy Regions to Aggregated Loads and Aggregated Generators.</xs:documentation>
+      </xs:annotation>
+      <xs:sequence/>
+   </xs:complexType>
+
+   <xs:complexType name="CoordinateSystem"
+                   sawsdl:modelReference="http://iec.ch/TC57/CIM100#CoordinateSystem">
+      <xs:annotation>
+         <xs:documentation>Coordinate reference system.</xs:documentation>
+      </xs:annotation>
+      <xs:complexContent>
+         <xs:extension base="m:IdentifiedObject">
+            <xs:sequence>
+               <xs:element name="crsUrn"
+                           minOccurs="0"
+                           maxOccurs="1"
+                           type="xs:string"
+                           sawsdl:modelReference="http://iec.ch/TC57/CIM100#CoordinateSystem.crsUrn">
+                  <xs:annotation>
+                     <xs:documentation>A Uniform Resource Name (URN) for the coordinate reference system (crs) used to define 'Location.PositionPoints'.</xs:documentation>
+                     <xs:documentation>An example would be the European Petroleum Survey Group (EPSG) code for a coordinate reference system, defined in URN under the Open Geospatial Consortium (OGC) namespace as: urn:ogc:def:crs:EPSG::XXXX, where XXXX is an EPSG code (a full list of codes can be found at the EPSG Registry web site http://www.epsg-registry.org/). To define the coordinate system as being WGS84 (latitude, longitude) using an EPSG OGC, this attribute would be urn:ogc:def:crs:EPSG::4.3.2.6</xs:documentation>
+                     <xs:documentation>A profile should limit this code to a set of allowed URNs agreed to by all sending and receiving parties.</xs:documentation>
+                  </xs:annotation>
+               </xs:element>
+            </xs:sequence>
+         </xs:extension>
+      </xs:complexContent>
+   </xs:complexType>
+
+   <xs:complexType name="DateTimeInterval"
+                   sawsdl:modelReference="http://iec.ch/TC57/CIM100#DateTimeInterval">
+      <xs:annotation>
+         <xs:documentation>Interval between two date and time points, where the interval includes the start time but excludes end time.</xs:documentation>
+      </xs:annotation>
+      <xs:sequence/>
+   </xs:complexType>
+
+   <xs:complexType name="ElectronicAddress"
+                   sawsdl:modelReference="http://iec.ch/TC57/CIM100#ElectronicAddress">
+      <xs:annotation>
+         <xs:documentation>Electronic address information.</xs:documentation>
+      </xs:annotation>
+      <xs:sequence>
+         <xs:element name="email1"
+                     minOccurs="0"
+                     maxOccurs="1"
+                     type="xs:string"
+                     sawsdl:modelReference="http://iec.ch/TC57/CIM100#ElectronicAddress.email1">
+            <xs:annotation>
+               <xs:documentation>Primary email address.</xs:documentation>
+            </xs:annotation>
+         </xs:element>
+         <xs:element name="email2"
+                     minOccurs="0"
+                     maxOccurs="1"
+                     type="xs:string"
+                     sawsdl:modelReference="http://iec.ch/TC57/CIM100#ElectronicAddress.email2">
+            <xs:annotation>
+               <xs:documentation>Alternate email address.</xs:documentation>
+            </xs:annotation>
+         </xs:element>
+      </xs:sequence>
+   </xs:complexType>
+
+   <xs:complexType name="IdentifiedObject"
+                   sawsdl:modelReference="http://iec.ch/TC57/CIM100#IdentifiedObject">
+      <xs:annotation>
+         <xs:documentation>This is a root class to provide common identification for all classes needing identification and naming attributes.</xs:documentation>
+      </xs:annotation>
+      <xs:sequence>
+         <xs:element name="mRID"
+                     minOccurs="0"
+                     maxOccurs="1"
+                     type="xs:string"
+                     sawsdl:modelReference="http://iec.ch/TC57/CIM100#IdentifiedObject.mRID">
+            <xs:annotation>
+               <xs:documentation>Master resource identifier issued by a model authority. The mRID is unique within an exchange context. Global uniqueness is easily achieved by using a UUID, as specified in RFC 4122, for the mRID. The use of UUID is strongly recommended.</xs:documentation>
+               <xs:documentation>For CIMXML data files in RDF syntax conforming to IEC 61970-552, the mRID is mapped to rdf:ID or rdf:about attributes that identify CIM object elements.</xs:documentation>
+            </xs:annotation>
+         </xs:element>
+         <xs:element name="description"
+                     minOccurs="0"
+                     maxOccurs="1"
+                     type="xs:string"
+                     sawsdl:modelReference="http://iec.ch/TC57/CIM100#IdentifiedObject.description">
+            <xs:annotation>
+               <xs:documentation>The description is a free human readable text describing or naming the object. It may be non unique and may not correlate to a naming hierarchy.</xs:documentation>
+            </xs:annotation>
+         </xs:element>
+         <xs:element name="name"
+                     minOccurs="0"
+                     maxOccurs="1"
+                     type="xs:string"
+                     sawsdl:modelReference="http://iec.ch/TC57/CIM100#IdentifiedObject.name">
+            <xs:annotation>
+               <xs:documentation>The name is any free human readable and possibly non unique text naming the object.</xs:documentation>
+            </xs:annotation>
+         </xs:element>
+      </xs:sequence>
+   </xs:complexType>
+
+   <xs:complexType name="IndividualPnode"
+                   sawsdl:modelReference="http://iec.ch/TC57/CIM100#IndividualPnode">
+      <xs:annotation>
+         <xs:documentation>Individual pricing node based on Pnode.</xs:documentation>
+      </xs:annotation>
+      <xs:complexContent>
+         <xs:extension base="m:Pnode">
+            <xs:sequence/>
+         </xs:extension>
+      </xs:complexContent>
+   </xs:complexType>
+
+   <xs:complexType name="Location"
+                   sawsdl:modelReference="http://iec.ch/TC57/CIM100#Location">
+      <xs:annotation>
+         <xs:documentation>The place, scene, or point of something where someone or something has been, is, and/or will be at a given moment in time. It can be defined with one or more position points (coordinates) in a given coordinate system.</xs:documentation>
+      </xs:annotation>
+      <xs:complexContent>
+         <xs:extension base="m:IdentifiedObject">
+            <xs:sequence>
+               <xs:element name="type"
+                           minOccurs="0"
+                           maxOccurs="1"
+                           type="xs:string"
+                           sawsdl:modelReference="http://iec.ch/TC57/CIM100#Location.type">
+                  <xs:annotation>
+                     <xs:documentation>Classification by utility's corporate standards and practices, relative to the location itself (e.g., geographical, functional accounting, etc., not a given property that happens to exist at that location).</xs:documentation>
+                  </xs:annotation>
+               </xs:element>
+               <xs:element name="CoordinateSystem"
+                           minOccurs="0"
+                           maxOccurs="1"
+                           type="m:CoordinateSystem"
+                           sawsdl:modelReference="http://iec.ch/TC57/CIM100#Location.CoordinateSystem">
+                  <xs:annotation>
+                     <xs:documentation>Coordinate system used to describe position points of this location.</xs:documentation>
+                  </xs:annotation>
+               </xs:element>
+               <xs:element name="electronicAddress"
+                           minOccurs="0"
+                           maxOccurs="1"
+                           type="m:ElectronicAddress"
+                           sawsdl:modelReference="http://iec.ch/TC57/CIM100#Location.electronicAddress">
+                  <xs:annotation>
+                     <xs:documentation>Electronic address.</xs:documentation>
+                  </xs:annotation>
+               </xs:element>
+               <xs:element name="mainAddress"
+                           minOccurs="0"
+                           maxOccurs="1"
+                           type="m:StreetAddress"
+                           sawsdl:modelReference="http://iec.ch/TC57/CIM100#Location.mainAddress">
+                  <xs:annotation>
+                     <xs:documentation>Main address of the location.</xs:documentation>
+                  </xs:annotation>
+               </xs:element>
+               <xs:element name="phone1"
+                           minOccurs="0"
+                           maxOccurs="1"
+                           type="m:TelephoneNumber"
+                           sawsdl:modelReference="http://iec.ch/TC57/CIM100#Location.phone1">
+                  <xs:annotation>
+                     <xs:documentation>Phone number.</xs:documentation>
+                  </xs:annotation>
+               </xs:element>
+               <xs:element name="PositionPoints"
+                           minOccurs="0"
+                           maxOccurs="unbounded"
+                           type="m:PositionPoint"
+                           sawsdl:modelReference="http://iec.ch/TC57/CIM100#Location.PositionPoints">
+                  <xs:annotation>
+                     <xs:documentation>Sequence of position points describing this location, expressed in coordinate system 'Location.CoordinateSystem'.</xs:documentation>
+                  </xs:annotation>
+               </xs:element>
+               <xs:element name="secondaryAddress"
+                           minOccurs="0"
+                           maxOccurs="1"
+                           type="m:StreetAddress"
+                           sawsdl:modelReference="http://iec.ch/TC57/CIM100#Location.secondaryAddress">
+                  <xs:annotation>
+                     <xs:documentation>Secondary address of the location. For example, PO Box address may have different ZIP code than that in the 'mainAddress'.</xs:documentation>
+                  </xs:annotation>
+               </xs:element>
+               <xs:element name="status"
+                           minOccurs="0"
+                           maxOccurs="1"
+                           type="m:Status"
+                           sawsdl:modelReference="http://iec.ch/TC57/CIM100#Location.status">
+                  <xs:annotation>
+                     <xs:documentation>Status of this location.</xs:documentation>
+                  </xs:annotation>
+               </xs:element>
+            </xs:sequence>
+         </xs:extension>
+      </xs:complexContent>
+   </xs:complexType>
+
+   <xs:simpleType name="MarketType"
+                  sawsdl:modelReference="http://iec.ch/TC57/CIM100#MarketType">
+      <xs:annotation>
+         <xs:documentation>Market type.</xs:documentation>
+      </xs:annotation>
+      <xs:restriction base="xs:string">
+         <xs:enumeration value="DAM">
+            <xs:annotation>
+               <xs:documentation>Day ahead market.</xs:documentation>
+            </xs:annotation>
+         </xs:enumeration>
+         <xs:enumeration value="HAM">
+            <xs:annotation>
+               <xs:documentation>Hour Ahead Market.</xs:documentation>
+            </xs:annotation>
+         </xs:enumeration>
+         <xs:enumeration value="RTM">
+            <xs:annotation>
+               <xs:documentation>Real time market.</xs:documentation>
+            </xs:annotation>
+         </xs:enumeration>
+         <xs:enumeration value="RUC">
+            <xs:annotation>
+               <xs:documentation>Residual Unit Commitment.</xs:documentation>
+            </xs:annotation>
+         </xs:enumeration>
+      </xs:restriction>
+   </xs:simpleType>
+
+   <xs:complexType name="Pnode" sawsdl:modelReference="http://iec.ch/TC57/CIM100#Pnode">
+      <xs:annotation>
+         <xs:documentation>A pricing node is directly associated with a connectivity node.  It is a pricing location for which market participants submit their bids, offers, buy/sell CRRs, and settle.</xs:documentation>
+      </xs:annotation>
+      <xs:complexContent>
+         <xs:extension base="m:IdentifiedObject">
+            <xs:sequence/>
+         </xs:extension>
+      </xs:complexContent>
+   </xs:complexType>
+
+   <xs:complexType name="PositionPoint"
+                   sawsdl:modelReference="http://iec.ch/TC57/CIM100#PositionPoint">
+      <xs:annotation>
+         <xs:documentation>Set of spatial coordinates that determine a point, defined in the coordinate system specified in 'Location.CoordinateSystem'. Use a single position point instance to describe a point-oriented location. Use a sequence of position points to describe a line-oriented object (physical location of non-point oriented objects like cables or lines), or area of an object (like a substation or a geographical zone - in this case, have first and last position point with the same values).</xs:documentation>
+      </xs:annotation>
+      <xs:sequence>
+         <xs:element name="xPosition"
+                     minOccurs="0"
+                     maxOccurs="1"
+                     type="xs:string"
+                     sawsdl:modelReference="http://iec.ch/TC57/CIM100#PositionPoint.xPosition">
+            <xs:annotation>
+               <xs:documentation>X axis position.</xs:documentation>
+            </xs:annotation>
+         </xs:element>
+         <xs:element name="yPosition"
+                     minOccurs="0"
+                     maxOccurs="1"
+                     type="xs:string"
+                     sawsdl:modelReference="http://iec.ch/TC57/CIM100#PositionPoint.yPosition">
+            <xs:annotation>
+               <xs:documentation>Y axis position.</xs:documentation>
+            </xs:annotation>
+         </xs:element>
+      </xs:sequence>
+   </xs:complexType>
+   <xs:complexType name="PowerSystemResource"
+                   sawsdl:modelReference="http://iec.ch/TC57/CIM100#PowerSystemResource">
+      <xs:annotation>
+         <xs:documentation>A power system resource (PSR) can be an item of equipment such as a switch, an equipment container containing many individual items of equipment such as a substation, or an organisational entity such as sub-control area. Power system resources can have measurements associated.</xs:documentation>
+      </xs:annotation>
+      <xs:complexContent>
+         <xs:extension base="m:IdentifiedObject">
+            <xs:sequence>
+               <xs:element name="Location"
+                           minOccurs="0"
+                           maxOccurs="1"
+                           type="m:Location"
+                           sawsdl:modelReference="http://iec.ch/TC57/CIM100#PowerSystemResource.Location">
+                  <xs:annotation>
+                     <xs:documentation>Location of this power system resource.</xs:documentation>
+                  </xs:annotation>
+               </xs:element>
+            </xs:sequence>
+         </xs:extension>
+      </xs:complexContent>
+   </xs:complexType>
+   <xs:complexType name="RegisteredDistributedResource"
+                   sawsdl:modelReference="http://iec.ch/TC57/CIM100#RegisteredDistributedResource">
+      <xs:annotation>
+         <xs:documentation>A registered resource that represents a distributed energy resource, such as a micro-generator, fuel cell, photo-voltaic energy source, etc.</xs:documentation>
+      </xs:annotation>
+      <xs:complexContent>
+         <xs:extension base="m:RegisteredResource">
+            <xs:sequence>
+               <xs:element name="distributedResourceType"
+                           minOccurs="0"
+                           maxOccurs="1"
+                           type="xs:string"
+                           sawsdl:modelReference="http://iec.ch/TC57/CIM100#RegisteredDistributedResource.distributedResourceType">
+                  <xs:annotation>
+                     <xs:documentation>The type of resource. Examples include: fuel cell, flywheel, photovoltaic, micro-turbine, CHP (combined heat power), V2G (vehicle to grid), DES (distributed energy storage), and others.</xs:documentation>
+                  </xs:annotation>
+               </xs:element>
+               <xs:element name="ResponseMethods"
+                           minOccurs="0"
+                           maxOccurs="unbounded"
+                           type="m:ResponseMethod"
+                           sawsdl:modelReference="http://iec.ch/TC57/CIM100#RegisteredDistributedResource.ResponseMethods">
+                  <xs:annotation/>
+               </xs:element>
+            </xs:sequence>
+         </xs:extension>
+      </xs:complexContent>
+   </xs:complexType>
+   <xs:complexType name="RegisteredResource"
+                   sawsdl:modelReference="http://iec.ch/TC57/CIM100#RegisteredResource">
+      <xs:annotation>
+         <xs:documentation>A resource that is registered through the market participant registration system. Examples include generating unit, load, and non-physical generator or load.</xs:documentation>
+      </xs:annotation>
+      <xs:complexContent>
+         <xs:extension base="m:PowerSystemResource">
+            <xs:sequence>
+                <xs:element name="AvailableSetPoints"
+                minOccurs="0"
+                maxOccurs="1"
+                type="m:AvailableSetPoints">
+                <xs:annotation>
+                <xs:documentation>Set of available set points for this resource.</xs:documentation>
+                </xs:annotation>
+</xs:element>
+
+
+               <xs:element name="isAggregatedRes"
+                           minOccurs="0"
+                           maxOccurs="1"
+                           type="m:YesNo"
+                           sawsdl:modelReference="http://iec.ch/TC57/CIM100#RegisteredResource.isAggregatedRes">
+                  <xs:annotation>
+                     <xs:documentation>A flag to indicate if a resource is an aggregated resource.</xs:documentation>
+                  </xs:annotation>
+               </xs:element>
+               <xs:element name="registrationStatus"
+                           minOccurs="0"
+                           maxOccurs="1"
+                           type="m:ResourceRegistrationStatus"
+                           sawsdl:modelReference="http://iec.ch/TC57/CIM100#RegisteredResource.registrationStatus">
+                  <xs:annotation>
+                     <xs:documentation>Registration Status of resource - Active, Mothballed, Planned, or Decommissioned.</xs:documentation>
+                  </xs:annotation>
+               </xs:element>
+               <xs:element name="AggregateNode"
+                           minOccurs="0"
+                           maxOccurs="1"
+                           type="m:AggregateNode"
+                           sawsdl:modelReference="http://iec.ch/TC57/CIM100#RegisteredResource.AggregateNode">
+                  <xs:annotation>
+                     <xs:documentation>An AggregateNode may be associated with up to many RegisteredResources.</xs:documentation>
+                  </xs:annotation>
+               </xs:element>
+               <xs:element name="Pnode"
+                           minOccurs="0"
+                           maxOccurs="1"
+                           type="m:Pnode"
+                           sawsdl:modelReference="http://iec.ch/TC57/CIM100#RegisteredResource.Pnode">
+                  <xs:annotation>
+                     <xs:documentation>A registered resource injects power at one or more connectivity nodes related to a pnode</xs:documentation>
+                  </xs:annotation>
+               </xs:element>
+               <xs:element name="ResourceAncillaryServiceQualification"
+                           minOccurs="0"
+                           maxOccurs="unbounded"
+                           type="m:ResourceCertification"
+                           sawsdl:modelReference="http://iec.ch/TC57/CIM100#RegisteredResource.ResourceAncillaryServiceQualification">
+                  <xs:annotation>
+                     <xs:documentation>RegisteredResources are qualified for resource ancillary service types (which include market product types as well as other types such as BlackStart) by the association to the class ResourceAncillaryServiceQualification.</xs:documentation>
+                  </xs:annotation>
+               </xs:element>
+               <xs:element name="ResourceCapacity"
+                           minOccurs="0"
+                           maxOccurs="unbounded"
+                           type="m:ResourceCapacity"
+                           sawsdl:modelReference="http://iec.ch/TC57/CIM100#RegisteredResource.ResourceCapacity">
+                  <xs:annotation/>
+               </xs:element>
+            </xs:sequence>
+         </xs:extension>
+      </xs:complexContent>
+   </xs:complexType>
+   <xs:complexType name="ResourceCapacity"
+                   sawsdl:modelReference="http://iec.ch/TC57/CIM100#ResourceCapacity">
+      <xs:annotation>
+         <xs:documentation>This class model the various capacities of a resource. A resource may have numbers of capacities related to operating, ancillary services, energy trade and so forth. Capacities may be defined for active power or reactive power.</xs:documentation>
+      </xs:annotation>
+      <xs:sequence>
+         <xs:element name="capacityType"
+                     minOccurs="0"
+                     maxOccurs="1"
+                     type="m:ResourceCapacityType"
+                     sawsdl:modelReference="http://iec.ch/TC57/CIM100#ResourceCapacity.capacityType">
+            <xs:annotation>
+               <xs:documentation>capacity type</xs:documentation>
+               <xs:documentation>The types are but not limited to:</xs:documentation>
+               <xs:documentation>Regulation Up</xs:documentation>
+               <xs:documentation>Regulation Dn</xs:documentation>
+               <xs:documentation>Spinning Reserve</xs:documentation>
+               <xs:documentation>Non-Spinning Reserve</xs:documentation>
+               <xs:documentation>FOO capacity</xs:documentation>
+               <xs:documentation>MOO capacity</xs:documentation>
+            </xs:annotation>
+         </xs:element>
+         <xs:element name="defaultCapacity"
+                     minOccurs="0"
+                     maxOccurs="1"
+                     type="xs:decimal"
+                     sawsdl:modelReference="http://iec.ch/TC57/CIM100#ResourceCapacity.defaultCapacity">
+            <xs:annotation>
+               <xs:documentation>default capacity</xs:documentation>
+            </xs:annotation>
+         </xs:element>
+         <xs:element name="maximumCapacity"
+                     minOccurs="0"
+                     maxOccurs="1"
+                     type="xs:decimal"
+                     sawsdl:modelReference="http://iec.ch/TC57/CIM100#ResourceCapacity.maximumCapacity">
+            <xs:annotation>
+               <xs:documentation>maximum capacity</xs:documentation>
+            </xs:annotation>
+         </xs:element>
+         <xs:element name="minimumCapacity"
+                     minOccurs="0"
+                     maxOccurs="1"
+                     type="xs:decimal"
+                     sawsdl:modelReference="http://iec.ch/TC57/CIM100#ResourceCapacity.minimumCapacity">
+            <xs:annotation>
+               <xs:documentation>minimum capacity</xs:documentation>
+            </xs:annotation>
+         </xs:element>
+         <xs:element name="unitSymbol"
+                     minOccurs="0"
+                     maxOccurs="1"
+                     type="m:UnitSymbol"
+                     sawsdl:modelReference="http://iec.ch/TC57/CIM100#ResourceCapacity.unitSymbol">
+            <xs:annotation>
+               <xs:documentation>Unit selection for the capacity values.</xs:documentation>
+            </xs:annotation>
+         </xs:element>
+      </xs:sequence>
+   </xs:complexType>
+
+   <xs:simpleType name="ResourceCapacityType"
+                  sawsdl:modelReference="http://iec.ch/TC57/CIM100#ResourceCapacityType">
+      <xs:annotation>
+         <xs:documentation>Resource capacity type.</xs:documentation>
+      </xs:annotation>
+      <xs:restriction base="xs:string">
+         <xs:enumeration value="FO">
+            <xs:annotation>
+               <xs:documentation>Flexible Offer.</xs:documentation>
+            </xs:annotation>
+         </xs:enumeration>
+         <xs:enumeration value="MO">
+            <xs:annotation>
+               <xs:documentation>Must Offer.</xs:documentation>
+            </xs:annotation>
+         </xs:enumeration>
+         <xs:enumeration value="NR">
+            <xs:annotation>
+               <xs:documentation>Non spinning reserve.</xs:documentation>
+            </xs:annotation>
+         </xs:enumeration>
+         <xs:enumeration value="RA">
+            <xs:annotation>
+               <xs:documentation>Resource Adequacy.</xs:documentation>
+            </xs:annotation>
+         </xs:enumeration>
+         <xs:enumeration value="RD">
+            <xs:annotation>
+               <xs:documentation>Regulation Down.</xs:documentation>
+            </xs:annotation>
+         </xs:enumeration>
+         <xs:enumeration value="RMR">
+            <xs:annotation>
+               <xs:documentation>Reliability Must Run.</xs:documentation>
+            </xs:annotation>
+         </xs:enumeration>
+         <xs:enumeration value="RU">
+            <xs:annotation>
+               <xs:documentation>Regulation Up.</xs:documentation>
+            </xs:annotation>
+         </xs:enumeration>
+         <xs:enumeration value="SR">
+            <xs:annotation>
+               <xs:documentation>Spinning reserve.</xs:documentation>
+            </xs:annotation>
+         </xs:enumeration>
+      </xs:restriction>
+   </xs:simpleType>
+
+   <xs:complexType name="ResourceCertification"
+                   sawsdl:modelReference="http://iec.ch/TC57/CIM100#ResourceCertification">
+      <xs:annotation>
+         <xs:documentation>This class represent the resource certification for a specific product type. For example, a resource is certified for Non-Spinning reserve for RTM.</xs:documentation>
+      </xs:annotation>
+      <xs:sequence>
+         <xs:element name="market"
+                     minOccurs="0"
+                     maxOccurs="1"
+                     type="m:MarketType"
+                     sawsdl:modelReference="http://iec.ch/TC57/CIM100#ResourceCertification.market">
+            <xs:annotation>
+               <xs:documentation>market type</xs:documentation>
+            </xs:annotation>
+         </xs:element>
+         <xs:element name="type"
+                     minOccurs="0"
+                     maxOccurs="1"
+                     type="m:ResourceCertificationKind"
+                     sawsdl:modelReference="http://iec.ch/TC57/CIM100#ResourceCertification.type">
+            <xs:annotation>
+               <xs:documentation>Type of service based on ResourceAncillaryServiceType enumeration</xs:documentation>
+            </xs:annotation>
+         </xs:element>
+      </xs:sequence>
+   </xs:complexType>
+
+   <xs:simpleType name="ResourceCertificationKind"
+                  sawsdl:modelReference="http://iec.ch/TC57/CIM100#ResourceCertificationKind">
+      <xs:annotation>
+         <xs:documentation>Types used for resource certification.</xs:documentation>
+      </xs:annotation>
+      <xs:restriction base="xs:string">
+         <xs:enumeration value="BLACKSTART">
+            <xs:annotation>
+               <xs:documentation>Black start</xs:documentation>
+            </xs:annotation>
+         </xs:enumeration>
+         <xs:enumeration value="Capacity">
+            <xs:annotation/>
+         </xs:enumeration>
+         <xs:enumeration value="DemandSideResponse">
+            <xs:annotation>
+               <xs:documentation>Demand Side Reponse (DSR)</xs:documentation>
+            </xs:annotation>
+         </xs:enumeration>
+         <xs:enumeration value="Energy">
+            <xs:annotation/>
+         </xs:enumeration>
+         <xs:enumeration value="IntermittentResource">
+            <xs:annotation>
+               <xs:documentation>Intermittent resource</xs:documentation>
+            </xs:annotation>
+         </xs:enumeration>
+         <xs:enumeration value="NonSpinningReserve">
+            <xs:annotation>
+               <xs:documentation>Non Spinning Reserve (NR, NONSPIN)</xs:documentation>
+            </xs:annotation>
+         </xs:enumeration>
+         <xs:enumeration value="RegulationDown">
+            <xs:annotation>
+               <xs:documentation>Regulation Down (RD, REGDN)</xs:documentation>
+            </xs:annotation>
+         </xs:enumeration>
+         <xs:enumeration value="RegulationUp">
+            <xs:annotation>
+               <xs:documentation>Regulation Up (RU, REGUP)</xs:documentation>
+            </xs:annotation>
+         </xs:enumeration>
+         <xs:enumeration value="ReliabilityMustRun">
+            <xs:annotation>
+               <xs:documentation>Reliability Must Run (RMR)</xs:documentation>
+            </xs:annotation>
+         </xs:enumeration>
+         <xs:enumeration value="ReliabilityUnitCommitment">
+            <xs:annotation>
+               <xs:documentation>Reliability unit commitment (RUC)</xs:documentation>
+            </xs:annotation>
+         </xs:enumeration>
+         <xs:enumeration value="SpinningReserve">
+            <xs:annotation>
+               <xs:documentation>Spinning Reserve (SR, RRSPIN)</xs:documentation>
+            </xs:annotation>
+         </xs:enumeration>
+         <xs:enumeration value="SynchronousCondenser">
+            <xs:annotation>
+               <xs:documentation>Synchronous Condenser (SYNCCOND)</xs:documentation>
+            </xs:annotation>
+         </xs:enumeration>
+      </xs:restriction>
+   </xs:simpleType>
+
+   <xs:simpleType name="ResourceRegistrationStatus"
+                  sawsdl:modelReference="http://iec.ch/TC57/CIM100#ResourceRegistrationStatus">
+      <xs:annotation>
+         <xs:documentation>Types of resource registration status, for example:</xs:documentation>
+         <xs:documentation>Active</xs:documentation>
+         <xs:documentation>Mothballed</xs:documentation>
+         <xs:documentation>Planned</xs:documentation>
+         <xs:documentation>Decommissioned</xs:documentation>
+      </xs:annotation>
+      <xs:restriction base="xs:string">
+         <xs:enumeration value="Active">
+            <xs:annotation>
+               <xs:documentation>Resource registration is active</xs:documentation>
+            </xs:annotation>
+         </xs:enumeration>
+         <xs:enumeration value="Decommissioned">
+            <xs:annotation>
+               <xs:documentation>Resource registration status is decommissioned</xs:documentation>
+            </xs:annotation>
+         </xs:enumeration>
+         <xs:enumeration value="Mothballed">
+            <xs:annotation>
+               <xs:documentation>Resource registration has been suspended</xs:documentation>
+            </xs:annotation>
+         </xs:enumeration>
+         <xs:enumeration value="Planned">
+            <xs:annotation>
+               <xs:documentation>Registration status is in the planning stage</xs:documentation>
+            </xs:annotation>
+         </xs:enumeration>
+      </xs:restriction>
+   </xs:simpleType>
+
+   <xs:complexType name="SetPoint">
+   <xs:annotation>
+      <xs:documentation>A single set point with name, unit and value.</xs:documentation>
+   </xs:annotation>
+   <xs:sequence>
+      <xs:element name="name"
+                  minOccurs="0"
+                  maxOccurs="1"
+                  type="xs:string"/>
+
+      <xs:element name="unit"
+                  minOccurs="0"
+                  maxOccurs="1"
+                  type="m:UnitSymbol"/>
+      
+      <xs:element name="value"
+                  minOccurs="0"
+                  maxOccurs="1"
+                  type="xs:float"/>
+   </xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="AvailableSetPoints">
+   <xs:annotation>
+      <xs:documentation>Container grouping multiple set points.</xs:documentation>
+   </xs:annotation>
+   <xs:sequence>
+      <xs:element name="SetPoint"
+                  minOccurs="0"
+                  maxOccurs="unbounded"
+                  type="m:SetPoint"/>
+   </xs:sequence>
+</xs:complexType>
+
+
+   <xs:complexType name="ResponseMethod"
+                   sawsdl:modelReference="http://iec.ch/TC57/CIM100#ResponseMethod">
+      <xs:annotation>
+         <xs:documentation>Specifies a category of energy usage that the demand response applies for; e.g. energy from lighting, HVAC, other.</xs:documentation>
+      </xs:annotation>
+      <xs:sequence>
+         <xs:element name="activePower"
+                     minOccurs="0"
+                     maxOccurs="1"
+                     type="xs:float"
+                     sawsdl:modelReference="http://iec.ch/TC57/CIM100#ResponseMethod.activePower">
+            <xs:annotation>
+               <xs:documentation>The active power value for the demand adjustment type. This supports requests to be made to a resource for some amount of active power provided by a particular response method, as specified by the method attribute (e.g. lighting, HVAC, wall mounted air conditioners, etc.).</xs:documentation>
+            </xs:annotation>
+         </xs:element>
+         <xs:element name="activePowerUOM"
+                     minOccurs="0"
+                     maxOccurs="1"
+                     type="xs:string"
+                     sawsdl:modelReference="http://iec.ch/TC57/CIM100#ResponseMethod.activePowerUOM">
+            <xs:annotation>
+               <xs:documentation>The unit of measure of active power, e.g. kiloWatts (kW), megaWatts (mW), etc.</xs:documentation>
+            </xs:annotation>
+         </xs:element>
+         <xs:element name="method"
+                     minOccurs="0"
+                     maxOccurs="1"
+                     type="xs:string"
+                     sawsdl:modelReference="http://iec.ch/TC57/CIM100#ResponseMethod.method">
+            <xs:annotation>
+               <xs:documentation>The response method (e.g. lighting, HVAC, wall mounted air conditioners, etc.).</xs:documentation>
+            </xs:annotation>
+         </xs:element>
+         <xs:element name="siteMultiplier"
+                     minOccurs="0"
+                     maxOccurs="1"
+                     type="xs:integer"
+                     sawsdl:modelReference="http://iec.ch/TC57/CIM100#ResponseMethod.siteMultiplier">
+            <xs:annotation>
+               <xs:documentation>This value provides for scaling of a response method's active power. For example, a response method of air conditioning could utilize a small amount of active power from each air conditioning unit (e.g. 0.1 kiloWatt), but the site multiplier could be used to produce a the total active power adjustment by multiplying the response method active power by this value (e.g. a building with 100 window air conditioning  units, so 100 * 0.1 kW = 10 kW).</xs:documentation>
+            </xs:annotation>
+         </xs:element>
+      </xs:sequence>
+   </xs:complexType>
+   <xs:complexType name="Status" sawsdl:modelReference="http://iec.ch/TC57/CIM100#Status">
+      <xs:annotation>
+         <xs:documentation>Current status information relevant to an entity.</xs:documentation>
+      </xs:annotation>
+      <xs:sequence>
+         <xs:element name="dateTime"
+                     minOccurs="0"
+                     maxOccurs="1"
+                     type="xs:dateTime"
+                     sawsdl:modelReference="http://iec.ch/TC57/CIM100#Status.dateTime">
+            <xs:annotation>
+               <xs:documentation>Date and time for which status 'value' applies.</xs:documentation>
+            </xs:annotation>
+         </xs:element>
+         <xs:element name="reason"
+                     minOccurs="0"
+                     maxOccurs="1"
+                     type="xs:string"
+                     sawsdl:modelReference="http://iec.ch/TC57/CIM100#Status.reason">
+            <xs:annotation>
+               <xs:documentation>Reason code or explanation for why an object went to the current status 'value'.</xs:documentation>
+            </xs:annotation>
+         </xs:element>
+         <xs:element name="remark"
+                     minOccurs="0"
+                     maxOccurs="1"
+                     type="xs:string"
+                     sawsdl:modelReference="http://iec.ch/TC57/CIM100#Status.remark">
+            <xs:annotation>
+               <xs:documentation>Pertinent information regarding the current 'value', as free form text.</xs:documentation>
+            </xs:annotation>
+         </xs:element>
+         <xs:element name="value"
+                     minOccurs="0"
+                     maxOccurs="1"
+                     type="xs:string"
+                     sawsdl:modelReference="http://iec.ch/TC57/CIM100#Status.value">
+            <xs:annotation>
+               <xs:documentation>Status value at 'dateTime'; prior status changes may have been kept in instances of activity records associated with the object to which this status applies.</xs:documentation>
+            </xs:annotation>
+         </xs:element>
+      </xs:sequence>
+   </xs:complexType>
+   <xs:complexType name="StreetAddress"
+                   sawsdl:modelReference="http://iec.ch/TC57/CIM100#StreetAddress">
+      <xs:annotation>
+         <xs:documentation>General purpose street and postal address information.</xs:documentation>
+      </xs:annotation>
+      <xs:sequence>
+         <xs:element name="poBox"
+                     minOccurs="0"
+                     maxOccurs="1"
+                     type="xs:string"
+                     sawsdl:modelReference="http://iec.ch/TC57/CIM100#StreetAddress.poBox">
+            <xs:annotation>
+               <xs:documentation>Post office box.</xs:documentation>
+            </xs:annotation>
+         </xs:element>
+         <xs:element name="postalCode"
+                     minOccurs="0"
+                     maxOccurs="1"
+                     type="xs:string"
+                     sawsdl:modelReference="http://iec.ch/TC57/CIM100#StreetAddress.postalCode">
+            <xs:annotation>
+               <xs:documentation>Postal code for the address.</xs:documentation>
+            </xs:annotation>
+         </xs:element>
+         <xs:element name="status"
+                     minOccurs="0"
+                     maxOccurs="1"
+                     type="m:Status"
+                     sawsdl:modelReference="http://iec.ch/TC57/CIM100#StreetAddress.status">
+            <xs:annotation>
+               <xs:documentation>Status of this address.</xs:documentation>
+            </xs:annotation>
+         </xs:element>
+         <xs:element name="streetDetail"
+                     minOccurs="0"
+                     maxOccurs="1"
+                     type="m:StreetDetail"
+                     sawsdl:modelReference="http://iec.ch/TC57/CIM100#StreetAddress.streetDetail">
+            <xs:annotation>
+               <xs:documentation>Street detail.</xs:documentation>
+            </xs:annotation>
+         </xs:element>
+         <xs:element name="townDetail"
+                     minOccurs="0"
+                     maxOccurs="1"
+                     type="m:TownDetail"
+                     sawsdl:modelReference="http://iec.ch/TC57/CIM100#StreetAddress.townDetail">
+            <xs:annotation>
+               <xs:documentation>Town detail.</xs:documentation>
+            </xs:annotation>
+         </xs:element>
+      </xs:sequence>
+   </xs:complexType>
+   <xs:complexType name="StreetDetail"
+                   sawsdl:modelReference="http://iec.ch/TC57/CIM100#StreetDetail">
+      <xs:annotation>
+         <xs:documentation>Street details, in the context of address.</xs:documentation>
+      </xs:annotation>
+      <xs:sequence/>
+   </xs:complexType>
+   <xs:complexType name="TelephoneNumber"
+                   sawsdl:modelReference="http://iec.ch/TC57/CIM100#TelephoneNumber">
+      <xs:annotation>
+         <xs:documentation>Telephone number.</xs:documentation>
+      </xs:annotation>
+      <xs:sequence>
+         <xs:element name="areaCode"
+                     minOccurs="0"
+                     maxOccurs="1"
+                     type="xs:string"
+                     sawsdl:modelReference="http://iec.ch/TC57/CIM100#TelephoneNumber.areaCode">
+            <xs:annotation>
+               <xs:documentation>(if applicable) Area or region code.</xs:documentation>
+            </xs:annotation>
+         </xs:element>
+         <xs:element name="cityCode"
+                     minOccurs="0"
+                     maxOccurs="1"
+                     type="xs:string"
+                     sawsdl:modelReference="http://iec.ch/TC57/CIM100#TelephoneNumber.cityCode">
+            <xs:annotation>
+               <xs:documentation>City code.</xs:documentation>
+            </xs:annotation>
+         </xs:element>
+         <xs:element name="countryCode"
+                     minOccurs="0"
+                     maxOccurs="1"
+                     type="xs:string"
+                     sawsdl:modelReference="http://iec.ch/TC57/CIM100#TelephoneNumber.countryCode">
+            <xs:annotation>
+               <xs:documentation>Country code.</xs:documentation>
+            </xs:annotation>
+         </xs:element>
+         <xs:element name="dialOut"
+                     minOccurs="0"
+                     maxOccurs="1"
+                     type="xs:string"
+                     sawsdl:modelReference="http://iec.ch/TC57/CIM100#TelephoneNumber.dialOut">
+            <xs:annotation>
+               <xs:documentation>(if applicable) Dial out code, for instance to call outside an enterprise.</xs:documentation>
+            </xs:annotation>
+         </xs:element>
+         <xs:element name="extension"
+                     minOccurs="0"
+                     maxOccurs="1"
+                     type="xs:string"
+                     sawsdl:modelReference="http://iec.ch/TC57/CIM100#TelephoneNumber.extension">
+            <xs:annotation>
+               <xs:documentation>(if applicable) Extension for this telephone number.</xs:documentation>
+            </xs:annotation>
+         </xs:element>
+         <xs:element name="internationalPrefix"
+                     minOccurs="0"
+                     maxOccurs="1"
+                     type="xs:string"
+                     sawsdl:modelReference="http://iec.ch/TC57/CIM100#TelephoneNumber.internationalPrefix">
+            <xs:annotation>
+               <xs:documentation>(if applicable) Prefix used when calling an international number.</xs:documentation>
+            </xs:annotation>
+         </xs:element>
+         <xs:element name="ituPhone"
+                     minOccurs="0"
+                     maxOccurs="1"
+                     type="xs:string"
+                     sawsdl:modelReference="http://iec.ch/TC57/CIM100#TelephoneNumber.ituPhone">
+            <xs:annotation>
+               <xs:documentation>Phone number according to International Telecommunication Union (ITU) E.164.</xs:documentation>
+            </xs:annotation>
+         </xs:element>
+         <xs:element name="localNumber"
+                     minOccurs="0"
+                     maxOccurs="1"
+                     type="xs:string"
+                     sawsdl:modelReference="http://iec.ch/TC57/CIM100#TelephoneNumber.localNumber">
+            <xs:annotation>
+               <xs:documentation>Main (local) part of this telephone number.</xs:documentation>
+            </xs:annotation>
+         </xs:element>
+      </xs:sequence>
+   </xs:complexType>
+   <xs:complexType name="TownDetail"
+                   sawsdl:modelReference="http://iec.ch/TC57/CIM100#TownDetail">
+      <xs:annotation>
+         <xs:documentation>Town details, in the context of address.</xs:documentation>
+      </xs:annotation>
+      <xs:sequence/>
+   </xs:complexType>
+   <xs:simpleType name="UnitSymbol"
+                  sawsdl:modelReference="http://iec.ch/TC57/CIM100#UnitSymbol">
+      <xs:annotation>
+         <xs:documentation>The derived units defined for usage in the CIM. In some cases, the derived unit is equal to an SI unit. Whenever possible, the standard derived symbol is used instead of the formula for the derived unit. For example, the unit symbol Farad is defined as "F" instead of "CPerV". In cases where a standard symbol does not exist for a derived unit, the formula for the unit is used as the unit symbol. For example, density does not have a standard symbol and so it is represented as "kgPerm3". With the exception of the "kg", which is an SI unit, the unit symbols do not contain multipliers and therefore represent the base derived unit to which a multiplier can be applied as a whole.</xs:documentation>
+         <xs:documentation>Every unit symbol is treated as an unparseable text as if it were a single-letter symbol. The meaning of each unit symbol is defined by the accompanying descriptive text and not by the text contents of the unit symbol.</xs:documentation>
+         <xs:documentation>To allow the widest possible range of serializations without requiring special character handling, several substitutions are made which deviate from the format described in IEC 80000-1. The division symbol "/" is replaced by the letters "Per". Exponents are written in plain text after the unit as "m3" instead of being formatted as "m" with a superscript of 3  or introducing a symbol as in "m^3". The degree symbol "�" is replaced with the letters "deg". Any clarification of the meaning for a substitution is included in the description for the unit symbol.</xs:documentation>
+         <xs:documentation>Non-SI units are included in list of unit symbols to allow sources of data to be correctly labelled with their non-SI units (for example, a GPS sensor that is reporting numbers that represent feet instead of meters). This allows software to use the unit symbol information correctly convert and scale the raw data of those sources into SI-based units.</xs:documentation>
+         <xs:documentation>The integer values are used for harmonization with IEC 61850.</xs:documentation>
+      </xs:annotation>
+      <xs:restriction base="xs:string">
+         <xs:enumeration value="W">
+            <xs:annotation>
+               <xs:documentation>Real power in watts (J/s). Electrical power may have real and reactive components. The real portion of electrical power (I&amp;#178;R or VIcos(phi)), is expressed in Watts. See also apparent power and reactive power.</xs:documentation>
+            </xs:annotation>
+         </xs:enumeration>
+         <xs:enumeration value="WPers">
+            <xs:annotation>
+               <xs:documentation>Ramp rate in watts per second.</xs:documentation>
+            </xs:annotation>
+         </xs:enumeration>
+         <xs:enumeration value="Wh">
+            <xs:annotation>
+               <xs:documentation>Real energy in watt hours.</xs:documentation>
+            </xs:annotation>
+         </xs:enumeration>
+         <xs:enumeration value="kg">
+            <xs:annotation>
+               <xs:documentation>Mass in kilograms.  Note: multiplier �k� is included in this unit symbol for compatibility with IEC 61850-7-3.</xs:documentation>
+            </xs:annotation>
+         </xs:enumeration>
+         <xs:enumeration value="min">
+            <xs:annotation>
+               <xs:documentation>Time in minutes, minute  = 60 s.</xs:documentation>
+            </xs:annotation>
+         </xs:enumeration>
+      </xs:restriction>
+   </xs:simpleType>
+   <xs:simpleType name="YesNo" sawsdl:modelReference="http://iec.ch/TC57/CIM100#YesNo">
+      <xs:annotation>
+         <xs:documentation>Used as a flag set to Yes or No.</xs:documentation>
+      </xs:annotation>
+      <xs:restriction base="xs:string">
+         <xs:enumeration value="NO">
+            <xs:annotation/>
+         </xs:enumeration>
+         <xs:enumeration value="YES">
+            <xs:annotation/>
+         </xs:enumeration>
+      </xs:restriction>
+   </xs:simpleType>
+</xs:schema>
